@@ -8,21 +8,19 @@
     <script>
         var socket = io.connect();
         socket.on('ledstatus', function (data) {
-            console.log(data);
-            if (data === 'off') {
-                $('.box').removeClass('box-on');
-            } else {
-                $('.box').addClass('box-on');
-            }
+            changeColor(data);
         });
         socket.on('ledupdate', function(data) {
+            changeColor(data);
+        });
+        function changeColor(data) {
             console.log('received: ' + data);
             if (data === 'off') {
                 $('.box').removeClass('box-on');
             } else {
                 $('.box').addClass('box-on');
             }
-        });
+        }
     </script>
     <script>
     function ledOn(){

@@ -1,0 +1,78 @@
+<html>
+<head>
+    <script src = "/socket.io/socket.io.js" > </script>
+    <script type=text/javascript src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <title>Blink Beaglebone Black</title>
+    <script>
+        var socket = io.connect();
+        socket.on('ledstatus', function (data) {
+            console.log(data);
+            if (data === 'off') {
+                $('.box').removeClass('box-on');
+            } else {
+                $('.box').addClass('box-on');
+            }
+        });
+        socket.on('ledupdate', function(data) {
+            console.log('received: ' + data);
+            if (data === 'off') {
+                $('.box').removeClass('box-on');
+            } else {
+                $('.box').addClass('box-on');
+            }
+        });
+    </script>
+    <script>
+    function ledOn(){
+      socket.emit('led', 'on');
+    }
+    function ledOff(){
+      socket.emit('led', 'off');
+    }
+    </script>
+</head>
+
+<body>
+    <style>
+        * {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .box {
+            width: 150px;
+            height: 150px;
+            background-color: IndianRed;
+            margin-top: 40px;
+            border: 10px solid #313131;
+            -webkit-transition: background-color .5s ease-out;
+            -moz-transition: background-color .5s ease-out;
+            -o-transition: background-color .5s ease-out;
+            transition: background-color .5s ease-out;
+        }
+        .box.box-on {
+            background-color: DarkSeaGreen;
+        }
+
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md6 col-md-offset-1">
+                <h1>node.js and Beaglebone</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-2">
+                <input type="button" class="btn btn-success" name="on" id="onButton" value="on" onClick="ledOn();">
+                <input type="button" class="btn btn-danger" name="off" id="offButton" value="off" onClick="ledOff();">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2">
+                <div class="box">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -24,13 +24,13 @@ io.sockets.on('connection', function (socket) {
     console.log(data);
     if (data == 'on'){
         bs.digitalWrite("USR3", bs.HIGH);
-        socket.emit('ledstatus', 'green');
-        socket.broadcast.emit('ledupdate', 'green');
+        socket.emit('ledstatus', 'on');
+        socket.broadcast.emit('ledupdate', 'on');
 
     }else{
         bs.digitalWrite("USR3", bs.LOW);
-        socket.emit('ledstatus', 'red');
-        socket.broadcast.emit('ledupdate', 'red');
+        socket.emit('ledstatus', 'off');
+        socket.broadcast.emit('ledupdate', 'off');
     }
   });
 });
